@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Logged out - {{ block.super }}
+{% endblock %}
+
+{% block main %}
+    <h1>Logged out from MyMDB </h1>
+    <a href="{% url 'user:login' %}" class="btn btn-primary">Log in</a>
+{% endblock %}
