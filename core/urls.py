@@ -2,7 +2,8 @@ from django.urls import path
 
 from core.views import (MovieListView, MovieDetailView,
                         PersonDetailView, PersonListView,
-                        CreateVoteView, UpdateVoteView, MovieUploadImageView)
+                        CreateVoteView, UpdateVoteView,
+                        MovieUploadImageView, TopMoviesView)
 
 app_name = 'core'
 
@@ -10,6 +11,10 @@ urlpatterns = [
     path('movies',
          MovieListView.as_view(),
          name='movie-list'),
+
+    path('movies/top',
+         TopMoviesView.as_view(),
+         name='top-movies'),
 
     path('movies/<int:pk>',
          MovieDetailView.as_view(),

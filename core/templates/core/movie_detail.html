@@ -16,7 +16,9 @@
             </li>
         {% endfor %}
     </ul>
-    <p>Directed by {{ object.director }}</p>
+    {% if object.director %}
+        <p>Directed by {{ object.director }}</p>
+    {% endif %}
 {% endblock %}
 
 {% block sidebar %}
