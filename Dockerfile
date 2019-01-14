@@ -5,6 +5,10 @@ RUN mkdir /MyMDB
 WORKDIR /MyMDB
 COPY requirements* /MyMDB/
 COPY mymdb/ /MyMDB/mymdb
+COPY core/ /MyMDB/core
+COPY user/ /MyMDB/user
+COPY templates/ /MyMDB/templates
+COPY manage.py /MyMDB/manage.py
 COPY scripts /MyMDB/scripts
 RUN mkdir /var/log/mymdb/
 RUN touch /var/log/mymdb/mymdb.log
@@ -16,6 +20,7 @@ RUN apt-get install -y \
     postgresql-client \
     python3 \
     python3-pip
+
 
 # create virtualenv, install dependencies
 RUN pip3 install virtualenv
