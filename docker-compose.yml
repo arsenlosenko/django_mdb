@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+    db:
+        build: docker/psql
+        restart: always
+        ports: 
+            - "5432:5432"
+        environment:
+            - DB_USER
+            - DB_NAME
+            - DB_PASSWORD
+    web:
+        build: .
+        restart: always
+        ports:
+            - "80:80"
+        depends_on:
+            - db
+        environment:
+            - SETTINGS_MODULE
+            - SECRET_KEY
+            - LOG_LEVEL
+            - LOG_FILE
+            - DB_NAME
+            - DB_USER
+            - DB_PASSWORD
+            - DB_HOST
+            - DB_PORT
+            - CACHE_TIMEOUT
+

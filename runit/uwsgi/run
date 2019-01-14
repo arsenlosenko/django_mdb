@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+source /MyMDB/venv/bin/activate
+export PGPASSWORD="$DB_PASSWORD"
+pqsl \
+    -h "$DB_HOST" \
+    -p "$DB_PORT" \
+    -U "$DB_USER"  \
+    -d "$DB_NAME" 
+
+if [[ $? != 0 ]]; then
+    echo "no db server"
+    exit 1
+fi
+
+pushd /MyMDB/mymdb
+
+python manage.py migrate
+
+if [[ $? != 0 ]]; then
+    echo "can't migrate"
+    exit 2
+fi
+
+popd
+
+exec /sbin/setuser www-data \
+    uwsgi \
+    --ini /etc/uwsgi/apps-enabled/mymdb.ini \
+    >> /var/log/uwsgi/mymdb.log \
+    2>&1
