@@ -156,3 +156,5 @@ CACHES = {
 }
 
 CSRF_USE_SESSIONS = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
