@@ -1,34 +1,81 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     {{ object.title  }} - {{ block.super }}
 {% endblock %}
 
 {% block main %}
-    <div class="col">
+<div class="row">
+    <div class="col-md-4">
+        <ul class="movie-image list-inline">
+                <li class="list-inline-item">
+                    <img style="width: 100%"/>
+                </li>
+    <div id="carouselExampleControls" class="carousel slide">
+    <div class="carousel-inner">
+	{% for i in object.movieimage_set.all %}
+	    <div class="carousel-item {% if forloop.counter == 1%} active {% endif %}">
+		<img class="d-block w-100" src="{{ i.image.url }}" alt="First slide">
+	    </div>
+	{% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	<span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+	<span class="sr-only">Next</span>
+    </a>
+    </div>
+        </ul>
+    </div>
+    <div class="col-md-8">
         <h1>{{ object }}</h1>
         <p class="lead">{{object.plot}}</p>
+        {% if object.director %}
+            <p>Directed by
+                <a href="{% url 'core:person-detail' pk=object.director.id %}">
+                    {{ object.director.first_name }} {{ object.director.last_name }}
+                </a>
+            </p>
+        {% endif %}
     </div>
-    <ul class="movie-image list-inline">
-        {% for i in object.movieimage_set.all %}
-            <li class="list-inline-item">
-                <img src="{{ i.image.url }}"/>
-            </li>
-        {% endfor %}
-    </ul>
-    {% if object.director %}
-        <p>Directed by {{ object.director }}</p>
-    {% endif %}
+</div>
 {% endblock %}
 
 {% block sidebar %}
-    <div>
-        This movie is rated:
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+    <div class="card-header">
         <span class="badge badge-primary">{{ object.get_rating_display }}</span>
     </div>
+    <div class="card-body">
+        <h4 class="card-title">
+            Score: {{ object.score|default_if_none:"TDB" }}
+        </h4>
+        <p class="card-text">        
+            {% if vote_form %}
+            <form method="post" action="{{ vote_form_url }}">
+                {% csrf_token %}
+                {{ vote_form | crispy }}
+                <button class="btn btn-primary">Vote</button>
+            </form>
+            {% else %}
+                <p>Log in to vote for this movie</p>
+                <a class="btn btn-primary" href="{% url 'user:login' %}">Log In</a>
+            {% endif %}
+        </p>
+    </div>
+    </div>
     {% if image_form %}
-        <div>
-            <h4>Upload New Image</h4>
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+    <div class="card-header">New Image</div>
+    <div class="card-body">
+        <h4 class="card-title">
+            Upload
+        </h4>
+	<p class="card-text">
             <form method="post" enctype="multipart/form-data" action="{% url 'core:movie-image-upload' movie_id=object.id %}">
                 {% csrf_token %}
                 {{ image_form.as_p }}
@@ -36,24 +83,10 @@
                     <button class="btn btn-primary">Upload</button>
                 </p>
             </form>
-        </div>
+        </p>
+    </div>
     {% endif %}
     <div>
-        <h2>
-            Score: {{ object.score|default_if_none:"TDB" }}
-        </h2>
-    </div>
-    <div>
-        {% if vote_form %}
-        <form method="post" action="{{ vote_form_url }}">
-            {% csrf_token %}
-            {{ vote_form.as_p }}
-            <button class="btn btn-primary">Vote</button>
-        </form>
-        {% else %}
-            <p>Log in to vote for this movie</p>
-            <a class="btn btn-primary" href="{% url 'user:login' %}">Log In</a>
-        {% endif %}
     </div>
 {% endblock %}
 

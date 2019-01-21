@@ -5,5 +5,19 @@
 {% endblock %}
 
 {% block main %}
-    <h1> MyMDB - your personal movie database </h1>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h1 class="display-3 text-center">Welcome to MyMDB</h1>
+        <p class="lead">
+            Here you can browese and add information about movies and people involved in them.
+            Feel free to edit or add new information.
+        </p>
+        <hr class="my-4">
+        <p>You can begin browsing movies right here!</p>
+        <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'core:movie-list' %}" role="button">Go to movies</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'core:person-list' %}" role="button">Go to people</a>
+        </p>
+    </div>
+</div>
 {% endblock %}

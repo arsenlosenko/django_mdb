@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Top 10 Movies
+    Top 10 Movies
 {% endblock %}
 
-
 {% block main %}
-<h1>Top 10 Movies</h1>
-    <ol> 
+    <h3 class="display-5">Top 10 Movies</h1>
+    <ul class="list-group">
         {% for movie in object_list %}
-            <li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{% url 'core:movie-detail' pk=movie.id %}">
-                    {{movie}}
+                    {{ forloop.counter }}.  {{movie}}
                 </a>
-            </li>
+            <li>
         {% endfor %}
-    </ol>
+    </ul>
 {% endblock %}

@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    All the movies
+    Movie List
 {% endblock %}
 
 {% block main %}
-    <ul>
+    <h3 class="display-5">Movie List</h3>
+    <ul class="list-group">
         {% for movie in object_list %}
-            <li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{% url 'core:movie-detail' pk=movie.id %}">{{ movie  }}</a>
-            </li>
+                <span class="badge badge-primary badge-pill">{{ movie.rating }}</span>
+            <li>
         {% endfor %}
     </ul>
     {% if is_paginated %}

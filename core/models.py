@@ -98,6 +98,7 @@ class PersonManager(models.Manager):
 class Person(models.Model):
     first_name = models.CharField(max_length=140)
     last_name = models.CharField(max_length=140)
+    bio = models.TextField(default="Bio")
     born = models.DateField()
     died = models.DateField(null=True, blank=True)
 

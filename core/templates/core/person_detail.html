@@ -8,26 +8,29 @@
 {% block main %}
 
 <h1>{{object}}</h1>
+<p>{{ object.bio }}</p>
 <h2>Actor</h2>
-<ul>
+<ul class="list-group">
     {% for role in object.role_set.all %}
-        <li>
-            <a href="{% url 'core:movie-detail' role.movie.id %}">{{ role.movie }}</a>:{{ role.name }}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'core:movie-detail' role.movie.id %}">{{ role.movie }}</a>
         </li>
     {% endfor %}
+</ul>
+<ul>
 </ul>
 <h2>Writer</h2>
-<ul>
-    {% for movie in object.writing_credits.all %}
-        <li>
-            <a href="{% url 'core:movie-detail' movie.id %}">{{ movie }}</a>
-        </li>
-    {% endfor %}
-</ul>
+    <ul class="list-group">
+        {% for movie in object.writing_credits.all %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'core:movie-detail' movie.id %}">{{ movie }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 <h2>Director</h2>
-<ul>
+<ul class="list-group">
     {% for movie in object.directed.all %}
-        <li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="{% url 'core:movie-detail' movie.id %}">{{ movie }}</a>
         </li>
     {% endfor %}
