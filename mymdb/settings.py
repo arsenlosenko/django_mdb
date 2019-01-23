@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': config("DB_NAME", default='mymdb'),
         'USER': config("DB_USER", default='mymdb'),
         'PASSWORD': config("DB_PASSWORD"),
-        'HOST': config("DB_HOST"),
-        'PORT': config("DB_PORT"),
+        'HOST': config("DB_HOST", default="localhost"),
+        'PORT': config("DB_PORT", default="5432"),
     }
 }
 

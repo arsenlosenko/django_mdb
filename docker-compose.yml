@@ -5,16 +5,19 @@ services:
         build: docker/psql
         restart: always
         ports: 
-            - "5432:5433"
+            - "5432:5432"
         environment:
+            - DB_HOST
             - DB_USER
             - DB_NAME
             - DB_PASSWORD
     web:
         build: .
+        links:
+            - "db:database"
         restart: always
         ports:
-            - "80:8080"
+            - "80:80"
         depends_on:
             - db
         environment:
@@ -28,4 +31,3 @@ services:
             - DB_HOST
             - DB_PORT
             - CACHE_TIMEOUT
-
