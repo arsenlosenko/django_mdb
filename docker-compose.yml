@@ -11,6 +11,8 @@ services:
             - DB_USER
             - DB_NAME
             - DB_PASSWORD
+        volumes:
+            - "/var/lib/db/data:/var/lib/postgresql/data"
     web:
         build: .
         links:
